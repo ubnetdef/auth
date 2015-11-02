@@ -1,0 +1,21 @@
+{
+	"name": "ubnetdef/auth_server",
+	"version": "1.0.0-dev",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "James Droste",
+			"email": "james@droste.im",
+			"homepage": "https://james.droste.im",
+			"role": "Lead Developer"
+		}
+	],
+	"require": {
+		"cakephp/cakephp": "~2.7",
+		"wyrihaximus/html-compress": "~1.0",
+		"jadb/cakephp-monolog": "~2.0"
+	},
+	"require-dev": {
+		"cakephp/debug_kit": "~2.2"
+	}
+}
