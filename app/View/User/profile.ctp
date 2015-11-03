@@ -1,3 +1,10 @@
+<?php
+$groups = array();
+foreach ( $userinfo['Group'] AS $group ) {
+	$groups[] = $group['human_name'];
+}
+$groups = implode(', ', $groups);
+?>
 <h2>My Profile</h2>
 
 <form method="post" class="form-horizontal">
@@ -5,6 +12,13 @@
 		<label class="col-sm-3 control-label">Username</label>
 		<div class="col-sm-9">
 			<input type="text" class="form-control" value="<?php echo $userinfo['username']; ?>" readonly="readonly" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Groups</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" value="<?php echo $groups; ?>" readonly="readonly" />
 		</div>
 	</div>
 

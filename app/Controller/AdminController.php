@@ -6,7 +6,7 @@ class AdminController extends AppController {
 	public function index() {
 		$this->set('users', $this->User->find('all', array(
 			'fields' => array(
-				'User.id', 'User.username', 'User.active', 'Group.human_name'
+				'User.id', 'User.username', 'User.active'
 			),
 		)));
 	}
@@ -20,7 +20,7 @@ class AdminController extends AppController {
 	}
 
 	public function toggleActive($uid=false) {
-		
+
 	}
 
 	public function groups() {
