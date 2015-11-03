@@ -19,7 +19,7 @@
  */
 
 // The (hopefully long and secure) secret that you setup when installing mod_auth_tkt
-Configure::write('auth_ticket.secret', '');
+$config['auth_ticket']['secret'] = '';
 
 // How long should authentication cookies last?
-Configure::write('auth_ticket.default_expiration', 60 * 60 * 2);
+$config['auth_ticket']['default_expiration'] = 60 * 60 * 2;

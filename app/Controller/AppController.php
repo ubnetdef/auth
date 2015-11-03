@@ -57,7 +57,7 @@ class AppController extends Controller {
 
 		// Do we have a session, and are we still logged in?
 		if ( $this->Session->check('User') && !$this->AuthTicket->isLoggedIn() ) {
-			$this->Session->destory();
+			$this->Session->destroy();
 		} else if ( !$this->Session->check('User') && $this->AuthTicket->isLoggedIn() ) {
 			// Process a new login
 			$userinfo = $this->User->findByUsername($this->AuthTicket->getUsername());

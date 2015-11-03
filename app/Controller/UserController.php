@@ -31,7 +31,7 @@ class UserController extends AppController {
 					$this->populateInfo($attempted_user['User']['id']);
 
 					// Generate AuthTicket token
-					$this->AuthTicket->makeTicket($this->userinfo['username'], '', '');
+					$this->AuthTicket->makeTicket($this->userinfo['username'], 'tokens', 'data', env('REMOTE_ADDR'));
 
 					// Log it
 					$this->logMessage('AUTH', 'User just logged in');

@@ -1,9 +1,7 @@
 <?php
 App::uses('Component', 'Controller');
 
-class AuthTicketComponent extends Component {
-	public $components = array('Cookie');
-	
+class AuthTicketComponent extends Component {	
 	private $_key = '';
 	private $_defaultExpiration = (60*60*12);
 	
@@ -35,7 +33,7 @@ class AuthTicketComponent extends Component {
 		return $this->getUsername() !== 'guest';
 	}
 	
-	function makeTicket($user, $tokens='', $data='', $ip='0.0.0.0', $ts=false) {
+	public function makeTicket($user, $tokens='', $data='', $ip='0.0.0.0', $ts=false) {
 		if ( $ts === false ) $ts = time() + $this->_defaultExpiration;
 	
 		$ipts = pack('NN', ip2long($ip), $ts);
@@ -51,6 +49,10 @@ class AuthTicketComponent extends Component {
 			$tkt = sprintf('%s%08x%s!%s', $digest, $ts, $user, $data);
 		}
 		
-		$this->Cookie->write($this->_cookieName, base64_encode($tkt), false, $this->_defaultExpiration);
+		$this->setCookie(base64_encode($tkt));
+	}
+	
+	private function setCookie($value) {
+		setrawcookie($this->_cookieName, $value, time() + $this->_defaultExpiration, '/');
 	}
 }
