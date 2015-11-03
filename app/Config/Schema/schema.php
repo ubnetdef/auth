@@ -123,8 +123,8 @@ class AppSchema extends CakeSchema {
 		switch ( $event['create'] ) {
 			case 'groups':
 				$this->_create('Group', array(
-					'machine-name' => 'admin',
-					'human-name' => 'Administrators',
+					'machine_name' => 'admin',
+					'human_name' => 'Administrators',
 				));
 			break;
 			

@@ -8,7 +8,7 @@ class ServerShell extends AppShell {
 	}
 
 	public function install() {
-		$this->out('Installing UpdateServer');
+		$this->out('Installing AuthServer');
 
 		// Run the schema create tool
 		$this->dispatchShell('schema', 'create', '--yes', '--quiet');
@@ -25,7 +25,7 @@ class ServerShell extends AppShell {
 		$parser = parent::getOptionParser();
 
 		$parser->addArgument('install', array(
-			'help' => 'Installs the UpdateServer - Sets up the database'
+			'help' => 'Installs the AuthServer - Sets up the database'
 		));
 
 		return $parser;
