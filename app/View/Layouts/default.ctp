@@ -57,12 +57,12 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li class=""><a href="<?php echo $this->Html->url('/user/profile'); ?>">My Profile</a></li>
-						<li class=""><a href="<?php echo $this->Html->url('/user/logout/'.$userinfo['logout_token']); ?>">Logout</a></li>
+						<li class=""><a href="<?php echo $this->Html->url('/logout/'.$userinfo['logout_token']); ?>">Logout</a></li>
 					</ul>
 				</li>
 
 				<?php else: ?>
-				<li class="<?php echo isset($at_login) ? 'active' : ''; ?>"><a href="<?php echo $this->Html->url('/user/login'); ?>">Login</a></li>
+				<li class="<?php echo isset($at_login) ? 'active' : ''; ?>"><a href="<?php echo $this->Html->url('/login'); ?>">Login</a></li>
 				<?php endif; ?>
 			</ul>
 		</div>

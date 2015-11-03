@@ -27,6 +27,12 @@ App::uses('Folder', 'Utility');
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 	Router::connect('/', array('controller' => 'pages', 'action' => 'index'));
+	
+	Router::connect('/login', array('controller' => 'user', 'action' => 'login'));
+	Router::connect('/logout', array('controller' => 'user', 'action' => 'logout'));
+	Router::connect('/logout/*', array('controller' => 'user', 'action' => 'logout'));
+	Router::connect('/timeout', array('controller' => 'pages', 'action' => 'index'));
+	Router::connect('/expired', array('controller' => 'pages', 'action' => 'index'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on
