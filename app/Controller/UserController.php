@@ -30,8 +30,15 @@ class UserController extends AppController {
 					// Populate information
 					$this->populateInfo($attempted_user['User']['id']);
 
+					// Generate the tokens
+					$tokens = array();
+					foreach ( $attempted_user['Groups'] AS $group ) {
+						$tokens[] = $group['machine_name'];
+					}
+					$tokens = implode(' ', $tokens);
+
 					// Generate AuthTicket token
-					$this->AuthTicket->makeTicket($this->userinfo['username'], 'tokens', 'data', env('REMOTE_ADDR'));
+					$this->AuthTicket->makeTicket($this->userinfo['username'], $tokens, '', env('REMOTE_ADDR'));
 
 					// Log it
 					$this->logMessage('AUTH', 'User just logged in');
@@ -59,6 +66,9 @@ class UserController extends AppController {
 		if ( $token === $this->userinfo['logout_token'] ) {
 			// Destroy the session
 			$this->Session->destroy();
+
+			// Kill the AuthTicket
+			$this->AuthTicket->destroy();
 
 			// Log it
 			$this->logMessage('AUTH', 'User just logged out');

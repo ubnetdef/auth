@@ -49,10 +49,14 @@ class AuthTicketComponent extends Component {
 			$tkt = sprintf('%s%08x%s!%s', $digest, $ts, $user, $data);
 		}
 		
-		$this->setCookie(base64_encode($tkt));
+		$this->setCookie(base64_encode($tkt), time() + $this->_defaultExpiration);
 	}
 	
-	private function setCookie($value) {
-		setrawcookie($this->_cookieName, $value, time() + $this->_defaultExpiration, '/');
+	public function destroy() {
+		$this->setCookie('', time() - $this->_defaultExpiration);
+	}
+	
+	private function setCookie($value, $expiration) {
+		setrawcookie($this->_cookieName, $value, $expiration, '/');
 	}
 }
