@@ -32,7 +32,7 @@ class UserController extends AppController {
 
 					// Generate the tokens
 					$tokens = array();
-					foreach ( $attempted_user['Groups'] AS $group ) {
+					foreach ( $attempted_user['Group'] AS $group ) {
 						$tokens[] = $group['machine_name'];
 					}
 					$tokens = implode(' ', $tokens);
