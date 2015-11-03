@@ -98,7 +98,7 @@ class UserController extends AppController {
 			if ( Security::hash($old_password, 'blowfish', $cur_password) === $cur_password ) {
 				// Update password
 				$this->User->id = $this->userinfo['id'];
-				$this->User->saveField('password', Security::hash($new_password, 'blowfish'));
+				$this->User->saveField('password', $new_password);
 
 				// Log it
 				$this->logMessage('USER', 'User just updated his/her password');
