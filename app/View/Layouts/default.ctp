@@ -82,7 +82,7 @@
 <footer class="footer">
 	<div class="container">
 		<p class="text-muted pull-right">
-			UpdateServer <abbr title="<?php echo $version_long; ?>"><?php echo $version; ?></abbr> // Created by <a href="//james.droste.im">James Droste</a>
+			AuthServer <abbr title="<?php echo $version_long; ?>"><?php echo $version; ?></abbr> // Created by <a href="//james.droste.im">James Droste</a>
 		</p>
 	</div>
 </footer>

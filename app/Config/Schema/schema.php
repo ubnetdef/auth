@@ -4,31 +4,6 @@ App::uses('Security', 'Utility');
 
 class AppSchema extends CakeSchema {
 
-	public $attachments = array(
-		'id' => array(
-			'type' => 'integer',
-			'null' => false,
-			'key' => 'primary',
-		),
-		'inject_id' => array(
-			'type' => 'integer',
-			'null' => false,
-		),
-		'data' => array(
-			'type' => 'binary',
-			'null' => false,
-		),
-		'active' => array(
-			'type' => 'boolean',
-			'default' => true,
-			'null' => false,
-		),
-
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-		)
-	);
-
 	public $logs = array(
 		'id' => array(
 			'type' => 'integer',
@@ -69,6 +44,46 @@ class AppSchema extends CakeSchema {
 		)
 	);
 
+	public $groups = array(
+		'id' => array(
+			'type' => 'integer',
+			'null' => false,
+			'key' => 'primary',
+		),
+		'machine_name' => array(
+			'type' => 'string',
+			'null' => false,
+		),
+		'human_name' => array(
+			'type' => 'string',
+			'null' => false,
+		),
+
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+		)
+	);
+	
+	public $users_groups = array(
+		'id' => array(
+			'type' => 'integer',
+			'null' => false,
+			'key' => 'primary',
+		),
+		'user_id' => array(
+			'type' => 'integer',
+			'null' => false,
+		),
+		'group_id' => array(
+			'type' => 'integer',
+			'null' => false,
+		),
+
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+		)
+	);
+
 	public $users = array(
 		'id' => array(
 			'type' => 'integer',
@@ -106,6 +121,20 @@ class AppSchema extends CakeSchema {
 		if ( !isset($event['create']) ) return;
 
 		switch ( $event['create'] ) {
+			case 'groups':
+				$this->_create('Group', array(
+					'machine-name' => 'admin',
+					'human-name' => 'Administrators',
+				));
+			break;
+			
+			case 'users_groups':
+				$this->_create('UserGroup', array(
+					'user_id' => 1,
+					'group_id' => 1,
+				));
+			break;
+			
 			case 'users':
 				$this->_create('User', array(
 					'username' => 'admin',
@@ -122,7 +151,7 @@ class AppSchema extends CakeSchema {
 					'related_id' => 0,
 					'extra_data' => json_encode(array()),
 					'ip'         => '127.0.0.1',
-					'message'    => 'UpdateServer was just installed.',
+					'message'    => 'AuthServer was just installed.',
 				));
 			break;
 		}
