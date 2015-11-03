@@ -30,6 +30,9 @@ class UserController extends AppController {
 					// Populate information
 					$this->populateInfo($attempted_user['User']['id']);
 
+					// Generate AuthTicket token
+					$this->AuthTicket->makeTicket($this->userinfo['username'], '', '');
+
 					// Log it
 					$this->logMessage('AUTH', 'User just logged in');
 

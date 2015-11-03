@@ -2,6 +2,7 @@
 #################################################
 /app/Config/.env
 /app/Config/database.php
+/app/Config/auth_ticket.php
 /tmp
 /vendor
 /Plugin

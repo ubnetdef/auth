@@ -38,6 +38,7 @@ class AppController extends Controller {
 			'className' => 'BootstrapFlash',
 		),
 		'Session',
+		'AuthTicket',
 	);
 
 	// User Information
@@ -45,9 +46,6 @@ class AppController extends Controller {
 
 	// Logged in
 	protected $logged_in = false;
-
-	// Config
-	const SESSION_TIMEOUT  = (60*30); // 30 minutes
 
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -57,9 +55,16 @@ class AppController extends Controller {
 			$this->Components->load('DebugKit.Toolbar');
 		}
 
-		// Get user information
-		if ( $this->Session->check('User') ) {
-			$this->userinfo   = $this->Session->read('User');
+		// Do we have a session, and are we still logged in?
+		if ( $this->Session->check('User') && !$this->AuthTicket->isLoggedIn() ) {
+			$this->Session->destory();
+		} else if ( !$this->Session->check('User') && $this->AuthTicket->isLoggedIn() ) {
+			// Process a new login
+			$userinfo = $this->User->findByUsername($this->AuthTicket->getUsername());
+			
+			$this->populateInfo($userinfo);
+		} else if ( $this->Session->check('User') ) {
+			$this->userinfo = $this->Session->read('User');
 		}
 
 		// Set important instance variables
@@ -74,9 +79,6 @@ class AppController extends Controller {
 
 		// Set template information
 		$this->set('userinfo', $this->userinfo);
-
-		// Extend the session
-		$this->Session->write('Config.time', time()+self::SESSION_TIMEOUT);
 	}
 
 	public function afterFilter() {
@@ -100,7 +102,11 @@ class AppController extends Controller {
 
 	protected function populateInfo($userid) {
 		// Fetch user info
-		$userinfo = $this->User->findById($userid);
+		if ( is_array($userid) ) {
+			$userinfo = $userid;
+		} else {
+			$userinfo = $this->User->findById($userid);
+		}
 
 		if ( empty($userinfo) ) {
 			throw new InternalErrorException('Unknown UserID.');
@@ -128,7 +134,7 @@ class AppController extends Controller {
 	}
 
 	// Helper function for funky cases
-	protected function barf($ajax=false, $message='Stop trying to hack the InjectEngine!') {
+	protected function barf($ajax=false, $message='Stop trying to hack the AuthEngine!') {
 		$this->logMessage('BARF', 'Barf triggered by user on '.$this->request->params['controller'].'@'.$this->request->params['action']);
 
 		if ( $ajax ) {
@@ -148,7 +154,7 @@ class AppController extends Controller {
 	}
 
 	protected function logMessage($type, $message, $ip=-1, $user_id=-1) {
-		if ( $ip === -1 ) $ip = $_SERVER['REMOTE_ADDR'];
+		if ( $ip === -1 ) $ip = env('REMOTE_ADDR', 'UNKNOWN');
 		if ( $user_id === -1 && !empty($this->userinfo) ) $user_id = $this->userinfo['id'];
 
 		$this->Log->create();
