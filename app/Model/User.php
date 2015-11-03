@@ -5,6 +5,7 @@ App::uses('AppModel', 'Model');
  *
  */
 class User extends AppModel {
+	public $hasAndBelongsToMany = array('Group');
 
 	public function beforeSave($options = array()) {
 		if ( !empty($this->data['User']['password']) ) {

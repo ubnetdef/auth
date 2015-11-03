@@ -64,7 +64,7 @@ class AppSchema extends CakeSchema {
 		)
 	);
 	
-	public $users_groups = array(
+	public $groups_users = array(
 		'id' => array(
 			'type' => 'integer',
 			'null' => false,
@@ -128,11 +128,10 @@ class AppSchema extends CakeSchema {
 				));
 			break;
 			
-			case 'users_groups':
-				$this->_create('UserGroup', array(
-					'user_id' => 1,
-					'group_id' => 1,
-				));
+			case 'groups_users':
+				// Doing something special here
+				$tbl = ClassRegistry::init('Group');
+				$tbl->query('INSERT INTO groups_users (group_id, user_id) VALUES(1,1)');
 			break;
 			
 			case 'users':
