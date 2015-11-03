@@ -43,6 +43,7 @@ class AppController extends Controller {
 
 	// User Information
 	protected $userinfo  = array();
+	protected $groupinfo = array();
 
 	// Logged in
 	protected $logged_in = false;
@@ -65,6 +66,7 @@ class AppController extends Controller {
 			$this->populateInfo($userinfo);
 		} else if ( $this->Session->check('User') ) {
 			$this->userinfo = $this->Session->read('User');
+			$this->groupinfo = $this->Session->read('Group');
 		}
 
 		// Set important instance variables
@@ -79,6 +81,7 @@ class AppController extends Controller {
 
 		// Set template information
 		$this->set('userinfo', $this->userinfo);
+		$this->set('groupinfo', $this->groupinfo);
 	}
 
 	public function afterFilter() {
@@ -131,6 +134,7 @@ class AppController extends Controller {
 
 		// Update our arrays
 		$this->userinfo  = $userinfo['User'];
+		$this->groupinfo = $userinfo['Group'];
 	}
 
 	// Helper function for funky cases

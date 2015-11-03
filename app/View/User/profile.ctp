@@ -1,6 +1,6 @@
 <?php
 $groups = array();
-foreach ( $userinfo['Group'] AS $group ) {
+foreach ( $groupinfo['Group'] AS $group ) {
 	$groups[] = $group['human_name'];
 }
 $groups = implode(', ', $groups);
