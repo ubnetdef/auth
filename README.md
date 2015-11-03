@@ -6,7 +6,7 @@ This is the Auth Server used for UBNETDEF's websites
 ## Requirements
 
 * Apache
-* [https://github.com/gavincarr/mod_auth_tkt](mod_auth_tkt)
+* [mod_auth_tkt](https://github.com/gavincarr/mod_auth_tkt)
 * PHP 5.4
 * MySQL
 * Composer
