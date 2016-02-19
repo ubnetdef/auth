@@ -10,6 +10,32 @@ class UserController extends AppController {
 			$this->redirect('/');
 		}
 
+		if ( isset($this->request->query['back']) ) {
+			$redirectRaw = urldecode($this->request->query['back']);
+			$redirect    = parse_url($redirectRaw, PHP_URL_HOST);
+
+			// This assumes there's only 1 dot. Sorry co.uk, etc...
+			$getTLD = function($domain) {
+				if ( substr_count($domain, '.') > 1 ) {
+					$domain = explode('.', $domain);
+
+					while ( count($domain) > 1 ) array_shift($domain);
+
+					$domain = implode('.', $domain);
+				}
+
+				return $domain;
+			};
+
+			// A redirect is only "authorized" if the top level host is
+			// the same as the auth server's top level host.
+			if ( $getTLD($_SERVER['HTTP_HOST']) == $getTLD($redirect) ) {
+				$this->Session->write('auth.from', $redirectRaw);
+			} else {
+				$this->Flash->danger('Unauthorized redirect URL');
+			}
+		}
+
 		$username = null;
 
 		if ( $this->request->is('post') ) {
