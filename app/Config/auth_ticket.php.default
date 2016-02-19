@@ -23,3 +23,6 @@ $config['auth_ticket']['secret'] = '';
 
 // How long should authentication cookies last?
 $config['auth_ticket']['default_expiration'] = 60 * 60 * 2;
+
+// The domain to set the cookie to
+$config['auth_ticket']['domain'] = 'my_domain_here.com';

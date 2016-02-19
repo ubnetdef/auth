@@ -4,7 +4,8 @@ App::uses('Component', 'Controller');
 class AuthTicketComponent extends Component {	
 	private $_key = '';
 	private $_defaultExpiration = (60*60*12);
-	
+	private $_domain = '';
+
 	private $_cookieName = 'auth_tkt';
 
 	public function initialize(Controller $controller) {
@@ -23,6 +24,9 @@ class AuthTicketComponent extends Component {
 		
 		$this->_cookieName = (Configure::read('auth_ticket.cookie_name') != null ? 
 					Configure::read('auth_ticket.cookie_name') : $this->_cookieName);
+
+		$this->_domain = (Configure::read('auth_ticket.domain') != null ? 
+					Configure::read('auth_ticket.domain') : $this->_cookieName);
 	}
 	
 	public function getUsername() {
@@ -57,6 +61,6 @@ class AuthTicketComponent extends Component {
 	}
 	
 	private function setCookie($value, $expiration) {
-		setrawcookie($this->_cookieName, $value, $expiration, '/');
+		setrawcookie($this->_cookieName, $value, $expiration, '/', $this->_domain);
 	}
 }

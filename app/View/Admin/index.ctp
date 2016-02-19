@@ -1,21 +1,17 @@
 <h2>Auth Server Administrator Panel</h2>
 
-<ul class="nav nav-pills">
-	<li class="<?php echo isset($at_list) ? 'active' : ''; ?>"><?php echo $this->Html->link('User List', '/admin'); ?></li>
-	<li class="<?php echo isset($at_create) ? 'active' : ''; ?>"><?php echo $this->Html->link('User Creation', '/admin/create'); ?></li>
-	<li class="<?php echo isset($at_groups) ? 'active' : ''; ?>"><?php echo $this->Html->link('Group Management', '/admin/groups'); ?></li>
-</ul>
+<?php echo $this->element('navbars/admin', array('at_list' => true)); ?>
 
 <p>&nbsp;</p>
 
 <table class="table">
 	<thead>
 		<tr>
-			<td>User ID</td>
-			<td>Username</td>
-			<td>Status</td>
-			<td>Groups</td>
-			<td>Actions</td>
+			<td width="10%">User ID</td>
+			<td width="20%">Username</td>
+			<td width="40%">Groups</td>
+			<td width="10%">Status</td>
+			<td width="20%">Actions</td>
 		</tr>
 	</thead>
 	<tbody>
@@ -23,7 +19,6 @@
 		<tr>
 			<td><?php echo $user['User']['id']; ?></td>
 			<td><?php echo $user['User']['username']; ?></td>
-			<td><?php echo $user['User']['active'] == 1 ? 'Enabled' : 'Disabled'; ?></td>
 			<td>
 				<?php
 					$groups = array();
@@ -34,12 +29,13 @@
 					echo implode(', ', $groups);
 				?>
 			</td>
+			<td><?php echo $user['User']['active'] == 1 ? 'Enabled' : 'Disabled'; ?></td>
 			<td>
-				<?php echo $this->Html->link('Edit', '/admin/edit/'.$user['User']['id']); ?>
+				<?php echo $this->Html->link('Edit', '/admin/edit/'.$user['User']['id'], array('class' => 'btn btn-primary btn-xs')); ?>
 				
 				<?php if ( $userinfo['id'] != $user['User']['id'] ): ?>
 
-				| <?php echo $this->Html->link('Toggle Status', '/admin/toggleActive/'.$user['User']['id']); ?> 
+				<br /><?php echo $this->Html->link('Toggle Status', '/admin/toggleActive/'.$user['User']['id'], array('class' => 'btn btn-primary btn-xs')); ?> 
 
 				<?php endif; ?>
 			</td>

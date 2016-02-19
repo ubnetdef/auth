@@ -42,14 +42,16 @@
 
 				<?php if ( !empty($userinfo) ): ?>
 				<!-- Links the user has access to -->
-				<li><a href="/wiki">Wiki</a></li>
+				<li><a href="//wiki.ubnetdef.org">Wiki</a></li>
 				<?php endif; ?>
 			</ul>
 			
 			<ul class="nav navbar-nav navbar-right">
 				<?php if ( !empty($userinfo) ): ?>
 
+				<?php if ( $is_admin ): ?>
 				<li class="<?php echo isset($at_admin) ? 'active' : ''; ?>"><a href="<?php echo $this->Html->url('/admin'); ?>">Admin Panel</a></li>
+				<?php endif; ?>
 
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">

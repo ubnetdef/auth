@@ -45,8 +45,12 @@ class AppController extends Controller {
 	protected $userinfo  = array();
 	protected $groupinfo = array();
 
-	// Logged in
+	// User Attributes
 	protected $logged_in = false;
+	protected $is_admin  = false;
+
+	// Which group (machine_name) is the admin group
+	const ADMIN_GROUP = 'admin';
 
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -72,6 +76,13 @@ class AppController extends Controller {
 		// Set important instance variables
 		$this->logged_in        = !empty($this->userinfo);
 
+		// Determine if user is an administrator
+		if ( $this->logged_in ) {
+			foreach ( $this->groupinfo AS $group ) {
+				if ( $group['machine_name'] == self::ADMIN_GROUP ) $this->is_admin = true;
+			}
+		}
+
 		// Git version (because it looks cool)
 		exec('git describe --tags --always', $mini_hash);
 		exec('git log -1', $line);
@@ -82,6 +93,7 @@ class AppController extends Controller {
 		// Set template information
 		$this->set('userinfo', $this->userinfo);
 		$this->set('groupinfo', $this->groupinfo);
+		$this->set('is_admin', $this->is_admin);
 	}
 
 	public function afterFilter() {
@@ -91,7 +103,7 @@ class AppController extends Controller {
 		$parser = \WyriHaximus\HtmlCompress\Factory::construct();
 		$compressedHtml = $parser->compress($this->response->body());
 
-		$this->response->compress();
+		//$this->response->compress();
 		$this->response->body($compressedHtml);
 	}
 
