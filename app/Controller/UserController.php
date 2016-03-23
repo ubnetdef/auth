@@ -19,7 +19,7 @@ class UserController extends AppController {
 				if ( substr_count($domain, '.') > 1 ) {
 					$domain = explode('.', $domain);
 
-					while ( count($domain) > 1 ) array_shift($domain);
+					while ( count($domain) > 2 ) array_shift($domain);
 
 					$domain = implode('.', $domain);
 				}
